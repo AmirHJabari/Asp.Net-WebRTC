@@ -1,14 +1,8 @@
+using System.Dynamic;
+
 namespace Server.Hubs.Models;
 
-public class OfferRequest
+public class OfferRequest : BaseMsg
 {
-    public string FromId { get; set; }
-    public string ToId { get; set; }
-    public OfferObj Offer { get; set; }
-
-    public class OfferObj
-    {
-        public string Sdp { get; set; }
-        public string Type { get; set; }
-    }
+    public ExpandoObject Offer { get; set; } = new ExpandoObject();
 }

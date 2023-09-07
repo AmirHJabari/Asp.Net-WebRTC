@@ -11,21 +11,25 @@ public class WebRTCHub : Hub
         return base.OnConnectedAsync();
     }
 
-
     public Task Offer(OfferRequest request)
     {
-        Console.WriteLine("from " + request.FromId);
-        Console.WriteLine("to " + request.ToId);
-        Console.WriteLine("sdp " + request.Offer.Sdp);
-        Console.WriteLine("type " + request.Offer.Type);
-
-        var client = Clients.Client(request.ToId);
-        return client.SendAsync("Offer", request);
+        var client = Clients.Client(request.ToSocketId);
+        return client.SendAsync("offer", request);
     }
-    
-    public Task Answer(OfferRequest request)
+
+    public Task Answer(AnswerRequest data)
     {
-        var client = Clients.Client(request.ToId);
-        return client.SendAsync("Answer", request);
+        return Clients.Client(data.Destination).SendAsync("answer", data);
+    }
+
+    public Task CallerCandidate(CallerCandidateRequest data)
+    {
+        var client = Clients.Client(data.ToSocketId);
+        return client.SendAsync("callerCandidate", data.Candidate);
+    }
+
+    public Task CalleeCandidate(CalleeCandidateRequest data)
+    {
+        return Clients.Client(data.Destination).SendAsync("calleeCandidate", data.Candidate);
     }
 }
