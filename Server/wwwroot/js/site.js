@@ -8,9 +8,6 @@ const fromSocket = document.getElementById('userId')
 const localVideo = document.getElementById('localVideo')
 const remoteVideo = document.getElementById('remoteVideo')
 const videoEl = document.getElementById('videoEl')
-const canvasEl = document.getElementById('canvasEl')
-const canvas = document.getElementById('canvas')
-const ctx = canvas.getContext('2d')
 const call = document.getElementById('call')
 const mute = document.getElementById('mute')
 const unMute = document.getElementById('unMute')
@@ -350,12 +347,11 @@ let tracks = []
  }
 let peer = new RTCPeerConnection(configuration)
 let fromSocketId, toSocketId
-canvasEl.hidden = true
 let x,y,z
 var points = []
 
 sr.start().then(function () {
-    console.log("SignalR connected.");
+    console.info(`connected to signalr: ${sr.connectionId}`);
     fromSocket.innerText = sr.connectionId;
     fromSocketId = sr.connectionId
 }).catch((err) =>

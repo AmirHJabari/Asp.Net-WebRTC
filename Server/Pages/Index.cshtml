@@ -1,35 +1,67 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Omegle clone";
 }
-<h1 class="mb-3">WebRtc with asp.net core and signalr</h1>
-<div>
-    User Id: <pre id="userId" class="mx-1 bg-info border border-1 border-primary d-inline p-2 rounded-3">Connecting ...</pre>
-</div>
-<div class="form-group mt-4 mb-2">
-    <label for="toSocket">call a user: </label>
-    <input type="text" class="form-control" id="toSocket" placeholder="user Id">
-</div>
-<div>
-    <button class="btn btn-success" id="btn-connect">Connect</button>
-    <button class="btn btn-primary" id="call">Start</button>
-    <button class="btn btn-primary" id="stop">Stop</button>
-    <button class="btn btn-primary" id="mute">Mute</button>
-    <button class="btn btn-primary" id="unMute">UnMute</button>
-    <button class="btn btn-primary" id="erase">Erase</button>
-</div>
-<div class="row">
-    <div class="w-50 p-2" id="videoEl">
-        <h3>Local Video </h3>
-        <video id="localVideo" autoplay controls autoplay="true" class="w-100"></video>
+
+<div class="row m-0">
+    <div id="call-info" class="text-white col-sm-12 col-md-3 p-3" style="background:#3a2261;">
+        <div id="user-info-section" class="mb-5">
+            <label class="d-block" for="userId">User Id:</label>
+            <pre id="userId" style="font-size:0.8rem;" class="text-black bg-info border border-1 border-primary d-inline p-1 rounded-2">Connecting ...</pre>
+            <button onclick="navigator.clipboard.writeText($(`#userId`)[0].innerText);"
+                class="btn p-0">
+                <svg class="bg-info rounded-1" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#080341" />
+                </svg>
+            </button>
+        </div>
+        <div id="call-user-section" class="mb-5">
+            <label for="toSocket" class="d-block">Call User: </label>
+            <div class="input-group mb-3" style="max-width: 300px;">
+                <input id="toSocket" type="text" class="form-control" placeholder="User Id">
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="button">Call</button>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div id="call-stranger">
+            <button class="d-block btn btn-primary mx-auto">Call Stranger</button>
+        </div>
     </div>
-    <div class="video w-50 p-2" id="canvasEl">
-        <h3>Local Video </h3>
-        <canvas id='canvas' ></canvas>
+
+    <div id="videos-container" class="col-sm-12 col-md-6 p-3">
+        <div id="local-video-container">
+            <video id="local-video" muted autoplay>
+
+            </video>
+        </div>
+        <video id="remote-video" autoplay>
+
+        </video>
+        <div id="call-buttons-container">
+            <button class="btn btn-outline-warning" id="mic-button">
+                Mute
+            </button>
+            <button class="btn btn-outline-warning" id="camera-button">
+                Camera
+            </button>
+            <button class="btn btn-outline-warning" id="hangup-button">
+                Hangup
+            </button>
+        </div>
     </div>
-    <div class="w-50 p-2">
-        <h3>Remote Video </h3>
-        <video id="remoteVideo" autoplay controls autoplay="true" class="w-100"></video>
+
+    <div id="chat-container" class="bg-light col-sm-12 col-md-3 p-3">
+        <div id="messages-container" class="p-3">
+
+        </div>
+        <div id="new-message-container" class="input-group">
+            <input id="message-text" type="text" class="form-control" placeholder="New Message" />
+            <div class="input-group-append">
+                <button id="send-message" class="btn btn-success" type="button">Send</button>
+            </div>
+        </div>
     </div>
 </div>
