@@ -1,6 +1,4 @@
-﻿using static Server.Hubs.Models.OfferRequest;
-
-namespace Server.Hubs.Models;
+﻿namespace Server.Hubs.Models;
 
 public abstract class BaseMsg
 {

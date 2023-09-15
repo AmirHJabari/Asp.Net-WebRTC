@@ -9,19 +9,18 @@
         <div id="user-info-section" class="mb-5">
             <label class="d-block" for="userId">User Id:</label>
             <pre id="userId" style="font-size:0.8rem;" class="text-black bg-info border border-1 border-primary d-inline p-1 rounded-2">Connecting ...</pre>
-            <button onclick="navigator.clipboard.writeText($(`#userId`)[0].innerText);"
-                class="btn p-0">
+            <button id="btn-copy-user-id" class="btn p-0">
                 <svg class="bg-info rounded-1" xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M19.5 16.5L19.5 4.5L18.75 3.75H9L8.25 4.5L8.25 7.5L5.25 7.5L4.5 8.25V20.25L5.25 21H15L15.75 20.25V17.25H18.75L19.5 16.5ZM15.75 15.75L15.75 8.25L15 7.5L9.75 7.5V5.25L18 5.25V15.75H15.75ZM6 9L14.25 9L14.25 19.5L6 19.5L6 9Z" fill="#080341" />
                 </svg>
             </button>
         </div>
         <div id="call-user-section" class="mb-5">
-            <label for="toSocket" class="d-block">Call User: </label>
+            <label for="to-user-id" class="d-block">Call User: </label>
             <div class="input-group mb-3" style="max-width: 300px;">
-                <input id="toSocket" type="text" class="form-control" placeholder="User Id">
+                <input id="to-user-id" type="text" class="form-control" placeholder="User Id">
                 <div class="input-group-append">
-                    <button class="btn btn-success" type="button">Call</button>
+                    <button id="btn-call" class="btn btn-success" type="button">Call</button>
                 </div>
             </div>
         </div>
@@ -61,6 +60,30 @@
             <input id="message-text" type="text" class="form-control" placeholder="New Message" />
             <div class="input-group-append">
                 <button id="send-message" class="btn btn-success" type="button">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="incoming-call-modal" tabindex="-1" aria-labelledby="incoming-call-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModalLabel">Incoming Call</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="h5 text-center">"<span id="caller-name" class="text-danger"></span>" is calling you.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-reject-call" class="btn mx-auto btn-outline-danger">
+                    Reject
+                </button>
+                <button type="button" id="btn-accept-call" class="btn mx-auto btn-success">
+                    Accept
+                </button>
             </div>
         </div>
     </div>

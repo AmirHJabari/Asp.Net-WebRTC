@@ -6,7 +6,7 @@ namespace Server.Hubs;
 
 public class WebRTCHub : Hub
 {
-    ConcurrentDictionary<string, string> _connections = new();
+    static ConcurrentDictionary<string, string> _connections = new();
     public override Task OnConnectedAsync()
     {
         Console.WriteLine($"User Connected: {Context.ConnectionId}");
@@ -23,10 +23,21 @@ public class WebRTCHub : Hub
         return base.OnDisconnectedAsync(exception);
     }
 
-    public Task Offer(OfferRequest request)
+    public Task PreOffer(PreOfferRequest request)
     {
-        var client = Clients.Client(request.ToSocketId);
-        return client.SendAsync("offer", request);
+        var exists = _connections.ContainsKey(request.ToUserId);
+        if (exists && request.ToUserId != Context.ConnectionId)
+        {
+            var client = Clients.Client(request.ToUserId);
+            return client.SendAsync("PreOffer", request);
+        }
+        else
+        {
+            return Clients.Caller.SendAsync("ToastError", new ToastError
+            {
+                Message = "User id is invalid!"
+            });
+        }
     }
 
     public Task Answer(AnswerRequest data)
