@@ -11,6 +11,7 @@ let state = {
 };
 let incomingCallModalElm = document.getElementById('incoming-call-modal');
 let callerNameElm = document.getElementById('caller-name');
+let calleeNameElm = document.getElementById('callee-name');
 let userIdElm = document.getElementById('userId');
 let toUserIdElm = document.getElementById('to-user-id');
 
@@ -24,7 +25,7 @@ export const setUserId = (fromUserId) => {
     userIdElm.innerHTML = fromUserId;
 };
 
-export const setUserName = (userName) => {
+export function setUserName(userName) {
     state = {
         ...state,
         userName
@@ -71,4 +72,20 @@ export function showIncomingCallDialog(data, acceptCallHandler, rejectCallHandle
     callerNameElm.innerText = data.userName;
     console.log(data);
     $('#incoming-call-modal').modal('show');
+}
+
+export function showCallingDialog(toUserId, cancelCallHandler) {
+    calleeNameElm.innerText = toUserId;
+    $('#calling-modal').modal('show');
+}
+
+export function showToastError(message) {
+    Toastify({
+        text: message,
+        duration: 3000,
+        close: true,
+        style: {
+            background: "linear-gradient(108.4deg, rgb(253, 44, 56) 3.3%, rgb(176, 2, 12) 98.4%)"
+        }
+    }).showToast();
 }

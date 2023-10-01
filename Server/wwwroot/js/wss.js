@@ -9,14 +9,7 @@ let sr = new signalR.HubConnectionBuilder()
 // -------------- SIGNALR EVENTS --------------
 // toast error
 sr.on("ToastError", (data) => {
-    Toastify({
-        text: data.message,
-        duration: 3000,
-        close: true,
-        style: {
-            background: "linear-gradient(108.4deg, rgb(253, 44, 56) 3.3%, rgb(176, 2, 12) 98.4%)"
-        }
-    }).showToast();
+    store.showToastError(data.message);
 });
 
 // PreOffer
@@ -30,16 +23,22 @@ sr.on("PreOffer", (data) => {
 export function registerSignalREvents() {
     sr.start().then(() => {
         store.setUserId(sr.connectionId);
+        sr.invoke(`Rename`, { userName: store.getState().userName })
     });
 };
 
 export function sendPreOffer(toUserId, callType) {
-    let userName = "";
-    if (store.getState().userName == "") {
-        userName = prompt("Please enter you name:");
-        store.setUserName(userName)
-    }
-
-    let fromUserId = store.getState().fromUserId;
+    let state = store.getState();
+    let userName = state.userName;
+    
+    let fromUserId = state.fromUserId;
     sr.invoke(`PreOffer`, { userName, fromUserId, toUserId, callType });
+}
+
+export function sendPreOfferAnswer(data) {
+    let state = store.getState();
+    let userName = state.userName;
+    
+    let fromUserId = state.fromUserId;
+    sr.invoke(`PreOfferAnswer`, { userName, fromUserId, toUserId, callType });
 }

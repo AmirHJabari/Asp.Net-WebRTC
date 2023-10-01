@@ -6,11 +6,11 @@ namespace Server.Hubs;
 
 public class WebRTCHub : Hub
 {
-    static ConcurrentDictionary<string, string> _connections = new();
+    public static ConcurrentDictionary<string, string> Connections = new();
     public override Task OnConnectedAsync()
     {
         Console.WriteLine($"User Connected: {Context.ConnectionId}");
-        _connections[Context.ConnectionId] = "User Name";
+        Connections[Context.ConnectionId] = "Unknown";
 
         return base.OnConnectedAsync();
     }
@@ -18,14 +18,14 @@ public class WebRTCHub : Hub
     public override Task OnDisconnectedAsync(Exception? exception)
     {
         Console.WriteLine($"User Disconnected: {Context.ConnectionId}");
-        _connections.TryRemove(Context.ConnectionId, out _);
+        Connections.TryRemove(Context.ConnectionId, out _);
 
         return base.OnDisconnectedAsync(exception);
     }
 
     public Task PreOffer(PreOfferRequest request)
     {
-        var exists = _connections.ContainsKey(request.ToUserId);
+        var exists = Connections.ContainsKey(request.ToUserId);
         if (exists && request.ToUserId != Context.ConnectionId)
         {
             var client = Clients.Client(request.ToUserId);
@@ -38,6 +38,11 @@ public class WebRTCHub : Hub
                 Message = "User id is invalid!"
             });
         }
+    }
+
+    public void Rename(RenameRequest request)
+    {
+        Connections[Context.ConnectionId] = request.UserName;
     }
 
     public Task Answer(AnswerRequest data)

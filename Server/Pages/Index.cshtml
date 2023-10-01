@@ -40,13 +40,13 @@
 
         </video>
         <div id="call-buttons-container">
-            <button class="btn btn-outline-warning" id="mic-button">
+            <button class="btn btn-outline-warning border-2 fw-bold" id="mic-button">
                 Mute
             </button>
-            <button class="btn btn-outline-warning" id="camera-button">
+            <button class="btn btn-outline-warning border-2 fw-bold" id="camera-button">
                 Camera
             </button>
-            <button class="btn btn-outline-warning" id="hangup-button">
+            <button class="btn btn-outline-danger border-2 fw-bold" id="hangup-button">
                 Hangup
             </button>
         </div>
@@ -66,12 +66,12 @@
 </div>
 
 
-<!-- Modal -->
+<!-- Incoming Call Modal -->
 <div class="modal fade" id="incoming-call-modal" tabindex="-1" aria-labelledby="incoming-call-modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Incoming Call</h5>
+                <h5 class="modal-title">Incoming Call</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -83,6 +83,27 @@
                 </button>
                 <button type="button" id="btn-accept-call" class="btn mx-auto btn-success">
                     Accept
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Calling Modal -->
+<div class="modal fade" id="calling-modal" tabindex="-1" aria-labelledby="calling-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Calling</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="h5 text-center">Calling "<span id="callee-name" class="text-danger"></span>".</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-cancel-call" class="btn mx-auto btn-outline-danger">
+                    Cancel
                 </button>
             </div>
         </div>
